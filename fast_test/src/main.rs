@@ -1,7 +1,6 @@
 fn main() {
-    let a = vec![1, 2, 3, 4, 5, 6];
-    for mut i in 0..5 {
-        println!("{}", i);
-        i = 3;
-    }
+    let a = String::from("he is a fool");
+    let slice = &a[0..2];
+    let he: &str = "hes";
+    println!("{}", slice == he);
 }
