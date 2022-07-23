@@ -6,14 +6,17 @@ pub struct ListNode {
 }
 
 fn main() {
-    let mut a = ListNode{val:0, next:None};
-    let mut b = Some(Box::new(ListNode{val:1, next:Some(Box::new(a))}));
-    let mut c = b.clone();
-    c.as_mut().map(|inner| {
-        inner.next.as_mut().map(|a_val| {
-            a_val.val = 2;
-        });
-    });
-    println!("{}", b.as_ref().unwrap().next.as_ref().unwrap().val);
-    println!("{}", c.as_ref().unwrap().next.as_ref().unwrap().val);
+    let arr: Vec<Vec<char>> = 
+    vec![vec!['8','3','.','.','7','.','.','.','.']
+    ,vec!['6','.','.','1','9','5','.','.','.']
+    ,vec!['.','9','8','.','.','.','.','6','.']
+    ,vec!['8','.','.','.','6','.','.','.','3']
+    ,vec!['4','.','.','8','.','3','.','.','1']
+    ,vec!['7','.','.','.','2','.','.','.','6']
+    ,vec!['.','6','.','.','.','.','2','8','.']
+    ,vec!['.','.','.','4','1','9','.','.','5']
+    ,vec!['.','.','.','.','8','.','.','7','9']];
+    println!("{}", arr[0][1] == '3');
+    println!("{}", 3 / 3);
+
 }
