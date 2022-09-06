@@ -8,8 +8,7 @@ impl Solution {
             false => {(num2, num1)}
         };
         let mut carry: u8 = 0;
-        let short_len = short_str.len();
-        let long_len = long_str.len() - 1;
+        let (long_len, short_len) = (long_str.len() - 1, short_str.len());
         let long_bytes = long_str.as_bytes();
         for (i, num) in short_str.bytes().into_iter().rev().enumerate() {
             let sum = long_bytes[long_len - i] + num - 96 + carry;
