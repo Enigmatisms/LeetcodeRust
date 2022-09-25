@@ -1,7 +1,7 @@
 struct Solution;
 
 impl Solution {
-    pub fn jump(nums: Vec<i32>) -> i32 {
+    pub fn jump2(nums: Vec<i32>) -> i32 {
         // TODO: 不考虑1的情况
         let max_len = nums.len() - 1;
         if max_len == 0 {
@@ -26,10 +26,35 @@ impl Solution {
         }
         min_steps[0] as i32
     }
+
+    pub fn jump(nums: Vec<i32>) -> i32 {
+        let mut max_id = 0;
+        let mut steps = 0;
+        let max_len = nums.len() - 1;
+        if max_len == 0 {
+            return 0;
+        }
+        loop {
+            let cur_step = nums[max_id];
+            if max_id + cur_step as usize >= max_len {
+                return steps + 1;
+            }
+            let old_id = max_id;
+            let mut max_steps = 0;
+            for step in 1..=cur_step {
+                let next_step = nums[old_id + step as usize] + step;
+                if next_step > max_steps {
+                    max_steps = next_step;
+                    max_id = old_id + step as usize;
+                }
+            }
+            steps += 1;
+        }
+    }
 }
 
 fn main() {
     // println!("Hello, world!");
-    let vec: Vec<i32> = vec![2,3,1,1,4];
+    let vec: Vec<i32> = vec![5,2,0,1,4];
     println!("{}", Solution::jump(vec));
 }
