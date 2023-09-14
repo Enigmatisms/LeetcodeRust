@@ -51,18 +51,16 @@ fn to_refs<T>(mut list: &mut List<T>) -> Vec<&mut T> where T: Display {
   }
 }                                      // v
 
+use std::time::Instant;
+
 fn main() {
-  let mut link_list: List<i32> = List::new();
-  link_list.push(6);
-  link_list.push(4);
-  link_list.push(5);
-  link_list.push(3);
-  link_list.push(1);
-  link_list.push(2);
-  link_list.display();
-  let vec: Vec<&mut i32> = to_refs(&mut link_list);
-  for x in vec {
-    print!("{}, ", x);
+  let start = Instant::now();
+  let a = String::from("-".repeat(10000));
+  for i in 0..10000 {
+    // let mut a = format!("{:->1$}", "Q", i);
+    let mut b = a.clone();
+    b.replace_range(i..i + 1, "Q");
   }
-  println!("");
+  let time_sum = start.elapsed().as_secs_f32();
+  println!("Time sum: {} s, average time: {} s", time_sum, time_sum / 10000.);
 }
