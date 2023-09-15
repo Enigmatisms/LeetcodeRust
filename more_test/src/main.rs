@@ -1,4 +1,8 @@
 extern crate libc;
+use std::fs;
+use serde::de::DeserializeOwned;
+use std::io::BufReader;
+use serde_derive::{Deserialize, Serialize};
 
 #[repr(C)]
 pub struct AABB {
@@ -37,19 +41,30 @@ extern {
     pub fn dealloc();
 }
 
-fn main() {
-    let mut vector: Vec<Object> = Vec::new();
-    vector.push(Object::new(0, 4, 1.5, 2.0));
-    vector.push(Object::new(1, 3, 1.4, -2.0));
-    vector.push(Object::new(1, 2, 1.3, 2.0));
-    vector.push(Object::new(0, 1, 1.2, -2.0));
-    vector.push(Object::new(2, 2, 1.1, 2.0));
-    vector.push(Object::new(3, 3, 1.0, -2.0));
-    vector.push(Object::new(2, 4, 0.9, 0.0));
+#[derive(Deserialize, Serialize, Clone)]
+pub struct ObjInfoJson {
+    _type: u8,
+    ref_index: f32,
+    u_a: f32,
+    u_s: f32,
+    p_c: f32
+}
 
-    unsafe {
-        malloc_and_copy(vector.as_ptr(), vector.len() as libc::c_int);
-        call_print(vector.len() as libc::c_int);
-        dealloc();
+#[derive(Deserialize, Serialize, Clone)]
+pub struct ObjVecJson {
+    objs: Vec<ObjInfoJson>
+}
+
+pub fn read_config<RType: DeserializeOwned, PathType: AsRef<std::path::Path>>(file_path: PathType) -> RType {
+    let file: fs::File = fs::File::open(file_path).ok().unwrap();
+    let reader = BufReader::new(file);
+    let config: RType = serde_json::from_reader(reader).ok().unwrap();
+    config
+}
+
+fn main() {
+    let obj_vec = read_config::<ObjVecJson, _>("./test.json");
+    for (i, obj) in obj_vec.objs.iter().enumerate() {
+        println!("Object {i}: type = {}, ref_index = {}, u_a = {}, u_s = {}, p_c = {}", obj._type, obj.ref_index, obj.u_a, obj.u_s, obj.p_c);
     }
 }
