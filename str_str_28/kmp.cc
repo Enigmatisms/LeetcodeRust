@@ -1,7 +1,10 @@
 #include <string>
 #include <vector>
 #include <iostream>
-/** KMP algorithm */
+/** KMP algorithm 
+ * 0ms running time: 100%
+ * 5.61% memory
+*/
 class Solution {
 public:
     int strStr(const std::string& haystack, const std::string& needle) const {
