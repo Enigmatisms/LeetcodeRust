@@ -78,6 +78,8 @@
         "variant": "cpp",
         "forward_list": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
     }
 }
