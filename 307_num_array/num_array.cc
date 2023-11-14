@@ -1,5 +1,12 @@
 #include <vector>
 #include <map>
+#include <iostream>
+
+/**
+ * 你妈的被骗了，这道题是线段树。没碰到过，也不搞这个。我只能想到一个用表的方法
+ * 这我不去学不太好写。
+ * 
+ */
 
 class NumArray {
 public:
@@ -22,6 +29,9 @@ public:
                 changes.erase(it);
             else
                 it->second = res;
+        } else {
+            int delta = val - old_val;
+            if (delta) changes.emplace(index, delta);
         }
     }
     
@@ -46,4 +56,17 @@ private:
  * NumArray* obj = new NumArray(nums);
  * obj->update(index,val);
  * int param_2 = obj->sumRange(left,right);
+ * ["NumArray", "sumRange", "update", "sumRange"]
+    [[[1, 3, 5]], [0, 2], [1, 2], [0, 2]]
  */
+
+int main() {
+    std::vector<int> input{1, 3, 5};
+    NumArray arr(input);
+    int res = arr.sumRange(0, 2);
+    printf("%d\n", res);
+    arr.update(1, 2);
+    res = arr.sumRange(0, 2);
+    printf("%d\n", res);
+    return 0;
+}
