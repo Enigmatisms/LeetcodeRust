@@ -1,0 +1,39 @@
+/**
+ * @file ListNode.hpp
+ * 
+ * @author Qianyue He
+ * @brief Utility function for ListNode
+ */
+#pragma once
+#include <vector>
+#include <iostream>
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+bool print_link(ListNode* head, int max_depth = 25) {
+    for (int cnt = 0;head && cnt < max_depth;head = head->next, cnt ++) {
+        printf("%d", head->val);
+        if (head->next)
+            printf("->");
+        else {
+            printf("\n");
+            return true;
+        }
+    }
+    printf("(max-depth)\n");
+    return false;
+}
+
+void create_link_list(const std::vector<int>& vals, std::vector<ListNode>& nodes) {
+    nodes.resize(vals.size());
+    for (size_t j = 0; j < vals.size(); j++) {
+        nodes[j].val = vals[j];
+        nodes[j].next = (j + 1 == vals.size()) ? nullptr : &nodes[j + 1];
+    }
+}
