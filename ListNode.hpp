@@ -18,13 +18,28 @@ struct ListNode {
 
 
 // Definition for a binary tree node.
-struct TreeNode {
+class TreeNode {
+public:
     int val;
     TreeNode *left;
     TreeNode *right;
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+    std::vector<int> inorderTraversal() const {
+        std::vector<int> results;
+        recursive_traversal(this, results);
+        return results;
+    }
+private:
+    static void recursive_traversal(const TreeNode* const node, std::vector<int>& vals) {
+        if (node->left)
+            recursive_traversal(node->left, vals);
+        vals.push_back(node->val);
+        if (node->right)
+            recursive_traversal(node->right, vals);
+    }
 };
 
 bool print_link(ListNode* head, int max_depth = 25) {
