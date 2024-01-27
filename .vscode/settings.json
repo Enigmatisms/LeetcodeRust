@@ -80,6 +80,7 @@
         "queue": "cpp",
         "stack": "cpp",
         "xhash": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "numbers": "cpp"
     }
 }
