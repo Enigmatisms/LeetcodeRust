@@ -2,36 +2,47 @@
 #include <vector>
 #include <iostream>
 #include <unordered_map>
-#include "../ListNode.hpp"
-
+#include <chrono>
 using namespace std;
 
-std::vector<std::vector<int>> generateRandomMatrix(int row, int col) {
-    // 创建一个随机数生成器
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    // 定义整数分布范围
-    std::uniform_int_distribution<> dis(1, 100); // 可以根据需要调整范围
+/**
+ * 不能这样实现矩阵。这样实现的矩阵... 内部的内存不是连续的，自然也无法很好应用访存优化
+*/
 
-    // 生成随机矩阵
-    std::vector<std::vector<int>> matrix(row, std::vector<int>(col));
+class TicToc {
+private:
+    chrono::system_clock::time_point tp;
+public:
+    void tic() {
+        tp = chrono::system_clock::now();
+    }
+
+    double toc() const {
+        auto dur = chrono::system_clock::now() - tp;
+        auto count = chrono::duration_cast<chrono::microseconds>(dur).count();
+        return static_cast<double>(count) / 1e3;
+    }
+};
+
+vector<vector<int>> generateRandomMatrix(int row, int col) {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 100);
+
+    vector<vector<int>> matrix(row, vector<int>(col));
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
-            matrix[i][j] = dis(gen); // 生成随机整数
+            matrix[i][j] = dis(gen);
         }
     }
     return matrix;
 }
 
-/**
- * runtime: 99.16%
- * memory:  27.96%
- */
 class Solution {
 public:
     vector<vector<int>> transpose(vector<vector<int>>& matrix) {
         size_t row = matrix.size(), col = matrix[0].size();
-        std::vector<std::vector<int>> result(col, std::vector<int>(row, 0));
+        vector<vector<int>> result(col, vector<int>(row, 0));
         for (size_t i = 0; i < row; i++) {
             const auto& origin_row = matrix[i];
             for (size_t j = 0; j < col; j++) {
@@ -41,19 +52,17 @@ public:
         return result;
     }
 
-    // 分块转置(只针对大小为 16 的倍数的矩阵，用于 benchmarking)
     vector<vector<int>> transpose_patch(vector<vector<int>>& matrix) {
         size_t row = matrix.size(), col = matrix[0].size();
         size_t rpatch = row >> 4, cpatch = col >> 4;
-        std::vector<std::vector<int>> result(col, std::vector<int>(row, 0));
+        vector<vector<int>> result(col, vector<int>(row, 0));
         for (size_t r = 0; r < rpatch; r++) {
             size_t rbase = r << 4;
             for (size_t c = 0; c < cpatch; c++) {
                 size_t cbase = c << 4;
                 for (size_t i = 0; i < 16; i++) {
-                    const auto& row = matrix[rbase + i];
                     for (size_t j = 0; j < 16; j++) {
-                        result[cbase + j][rbase + i] = row[cbase + j];
+                        result[cbase + j][rbase + i] = matrix[rbase + i][cbase + j];
                     }
                 }
             }
