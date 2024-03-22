@@ -38,6 +38,7 @@ public:
                     int &o_num = original[i], s_num = sorted[i];
                     if (o_num == s_num) continue;
                     int &s_pos = pos_mapping[s_num];
+                    // 这是会有问题的，为什么？
                     std::swap(o_num, original[s_pos]);
                     std::swap(s_pos, pos_mapping[o_num]);
                     min_op_cnt ++;
