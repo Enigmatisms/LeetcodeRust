@@ -8,7 +8,7 @@
             "name": "(gdb) debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/1914_circle_matrix/a.out",
+            "program": "${workspaceFolder}/a.out",
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "args": [],

@@ -35,11 +35,11 @@ public:
                 for (size_t i = 0; i < original.size(); i++)
                     pos_mapping[original[i]] = i;
                 for (size_t i = 0; i < original.size(); i++) {
-                    int &o_num = original[i], s_num = sorted[i];
+                    int o_num = original[i], s_num = sorted[i];
+                    /// 这是会有问题的，为什么？为什么不能引用取等？
                     if (o_num == s_num) continue;
                     int &s_pos = pos_mapping[s_num];
-                    // 这是会有问题的，为什么？
-                    std::swap(o_num, original[s_pos]);
+                    std::swap(original[i], original[s_pos]);
                     std::swap(s_pos, pos_mapping[o_num]);
                     min_op_cnt ++;
                 }

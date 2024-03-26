@@ -24,12 +24,79 @@ public:
     }
 };
 
+
 struct ListNode {
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+class LinkedList {
+public:
+    LinkedList(): head(-1), tail(&head), _length(0) {}
+
+    ~LinkedList() {
+        // 手动顺序析构
+        ListNode* current = head.next;
+        while (current != nullptr) {
+            ListNode* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    void push(int val) {
+        tail->next = new ListNode(val, nullptr);
+        tail = tail->next;
+        ++ _length;
+    }
+
+    class iterator {
+        public:
+            using iterator_category = std::forward_iterator_tag;
+            using difference_type   = std::ptrdiff_t;
+            using value_type        = ListNode*;
+            using pointer           = ListNode**;  // or also value_type*
+            using reference         = ListNode*&;  // or also value_type&
+
+
+            iterator(pointer ptr): m_ptr(ptr) {}
+
+            reference operator*() const { return *m_ptr; }
+            pointer operator->() const { return m_ptr; }
+
+            iterator& operator++() {
+                if (m_ptr == nullptr) return *this;
+                auto ptr = (*m_ptr)->next;
+                // 千万注意二重指针取得是什么地址，这里直接写 &ptr 是会炸掉的，ptr 是局部变量
+                m_ptr = ptr == nullptr ? nullptr: &((*m_ptr)->next);
+                return *this;
+            }
+
+            friend bool operator== (const iterator& a, const iterator& b) { return a.m_ptr == b.m_ptr; };
+            friend bool operator!= (const iterator& a, const iterator& b) { return a.m_ptr != b.m_ptr; };
+        private:
+            ListNode** m_ptr;
+    };
+
+    iterator begin() {
+        // implicit conversion
+        return &(head.next);
+    }
+
+    iterator end() {
+        return nullptr;
+    }
+
+    int length() const {
+        return this->_length;
+    }
+private:
+    ListNode head;
+    ListNode* tail;
+    int _length;
 };
 
 
