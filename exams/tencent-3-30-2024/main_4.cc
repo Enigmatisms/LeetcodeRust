@@ -4,15 +4,15 @@
 #include <queue>
 
 // 不想写 std::tuple std::get 很烦
-struct Tuple3 {
+struct Pair {
     int cur_id;         // 当前节点 id
     int min_cost;       // 到达此节点的最小 cost
     int method;         // 到达这个此节点，产生min cost的对应途径
-    Tuple3 (int id, int cost, int mth): cur_id(id), min_cost(cost), method(mth) {}
+    Pair (int id, int cost, int mth): cur_id(id), min_cost(cost), method(mth) {}
 };
 
 struct Tuple3CompareFunctor {
-    bool operator() (const Tuple3& t1, const Tuple3& t2) const {
+    bool operator() (const Pair& t1, const Pair& t2) const {
         return t1.min_cost > t2.min_cost;
     }
 };
@@ -25,7 +25,7 @@ int dijkstra_state(int num_cities, std::vector<std::vector<std::vector<int>>>& a
     std::vector<std::vector<int>> dp(2, std::vector<int>(num_cities, INT32_MAX));
     dp[0].back() = 0;
     dp[1].back() = 0;
-    std::priority_queue<Tuple3, std::vector<Tuple3>, Tuple3CompareFunctor> queue;
+    std::priority_queue<Pair, std::vector<Pair>, Tuple3CompareFunctor> queue;
     queue.emplace(num_cities - 1, 0, 0);
     queue.emplace(num_cities - 1, 0, 1);
     while (queue.empty() == false) {
