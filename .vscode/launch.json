@@ -8,7 +8,7 @@
             "name": "(gdb) debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a.out",
+            "program": "${workspaceFolder}/hj_16_shopping/a.out",
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "args": [],
