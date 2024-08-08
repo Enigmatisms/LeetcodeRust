@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.cuh": "cpp",
     "vector": "cpp",
     "xlocale": "cpp",
     "xstring": "cpp",
@@ -93,7 +94,8 @@
     "semaphore": "cpp",
     "span": "cpp",
     "stop_token": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "ranges": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
