@@ -1,0 +1,4 @@
+**/target
+*.out
+*.exe
+fast_test/
