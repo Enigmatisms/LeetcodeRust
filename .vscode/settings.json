@@ -94,12 +94,8 @@
     "semaphore": "cpp",
     "span": "cpp",
     "stop_token": "cpp",
-<<<<<<< HEAD
-    "valarray": "cpp"
-=======
     "valarray": "cpp",
     "ranges": "cpp"
->>>>>>> 00112861eefa2932c5cab42e21ad5ca30fbfb5ad
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
